@@ -26,6 +26,7 @@
   "homepage": "https://github.com/thalles08/atividade2backend#readme",
   "dependencies": {
     "express": "^4.18.2",
+    "express-session": "^1.17.3",
     "mysql2": "^3.6.3"
   }
 }
