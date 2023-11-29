@@ -113,7 +113,7 @@ export default class ProfissionalCtrl {
                 profissional.excluir().then(()=>{
                     resposta.json({
                         status: true,
-                        mensagem: "Profissional excuído com sucesso!",                        
+                        mensagem: "Profissional excluído com sucesso!",                        
                     });
                 }).catch((erro)=>{
                     resposta.json({
