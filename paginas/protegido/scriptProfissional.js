@@ -29,7 +29,9 @@ botaoConfirmar.onclick = () => {
             incluirProfissional();
         }
         if (acao === 'atualizar'){
-            //atualizarProfissional();
+            if (confirm("Tem certeza que deseja alterar os dados do Profissional?")){
+                atualizarProfissional();
+            }
         }
         if (acao === 'excluir'){
             if (confirm("Tem certeza que deseja excluir o profissional?")){
@@ -128,6 +130,59 @@ function incluirProfissional(){
         }
     }).catch((erro) => {
         mostraMensagem('Erro ao cadastrar Profissional: ' + erro.message);
+    })
+}
+
+function atualizarProfissional(){
+
+    // pegar as informações que serão preenchidas no formulário e enviá-las para o backend:
+
+    const id = document.getElementById('id').value;
+    const cpf = document.getElementById('cpf').value;
+    const nome = document.getElementById('nome').value;
+    const dataNascimento = document.getElementById('dataNascimento').value;
+    const email = document.getElementById('email').value;
+    const telefone = document.getElementById('telefone').value;
+    const cep = document.getElementById('cep').value;
+    const endereco = document.getElementById('endereco').value;
+    const numeroCompl = document.getElementById('numeroCompl').value;
+    const bairro = document.getElementById('bairro').value;
+    const cidade = document.getElementById('cidade').value;
+
+    // o envio dos dados será feito por meio da api fetch:
+
+    fetch('http://localhost:4000/profissional', {
+        method: 'PUT' || 'PATCH',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify({
+            id:id,
+            cpf:cpf,
+            nome:nome,
+            dataNascimento:dataNascimento,
+            email:email,
+            telefone:telefone,
+            cep:cep,
+            endereco:endereco,
+            numeroCompl:numeroCompl,
+            bairro:bairro,
+            cidade:cidade
+        })
+    }).then((resposta) => {
+        return resposta.json();
+    }).then((dados) => {
+        if (dados.status){
+            mostraMensagem(dados.mensagem);
+            limparFormulario();
+            acao = 'padrao';
+            habilitarBotoes();
+            mostrarTabelaProfissional();
+        } else {
+            mostraMensagem(dados.mensagem);
+        }
+    }).catch((erro) => {
+        mostraMensagem('Erro ao atualizar Profissional: ' + erro.message);
     })
 }
 
